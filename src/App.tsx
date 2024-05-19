@@ -28,7 +28,7 @@ function App() {
                     src={githubMark}
                     alt="Link to GitHub"
                 /></a>
-                <span>Bytefield-SVG Studio </span>
+                <span>ByteField-SVG Studio </span>
                 <a target="_blank" href="https://bytefield-svg.deepsymmetry.org/bytefield-svg/intro.html">(ByteField
                     Format Docs)</a>
             </h4>
