@@ -13,6 +13,15 @@
     grid-area: title;
     text-align: center;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.github-icon {
+    height: 1em;
+    padding-top: 0.3em;
 }
 
 .source {

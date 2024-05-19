@@ -2,6 +2,7 @@ import {createSignal} from 'solid-js';
 import './App.css';
 import generate from 'bytefield-svg';
 import sampleDiagramSource from "./sample-diagram-source.ts";
+import githubMark from './assets/github-mark.svg'
 
 function App() {
     const textPlaceholder = `Enter a bytefield-svg diagram here`
@@ -21,7 +22,16 @@ function App() {
 
     return (
         <div class="app-container">
-            <h4 class="title">Bytefield-SVG Studio</h4>
+            <h4 class="title">
+                <a target="_blank" href="https://github.com/EugenDueck/bytefield-svg-studio"> <img
+                    class="github-icon"
+                    src={githubMark}
+                    alt="Link to GitHub"
+                /></a>
+                <span>Bytefield-SVG Studio </span>
+                <a target="_blank" href="https://bytefield-svg.deepsymmetry.org/bytefield-svg/intro.html">(ByteField
+                    Format Docs)</a>
+            </h4>
             <textarea
                 class="source"
                 value={text()}
