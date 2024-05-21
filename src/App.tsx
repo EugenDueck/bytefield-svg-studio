@@ -18,7 +18,6 @@ function App() {
             return generate(diagramSource, {"embedded": true});
         } catch (e) {
             setErrorMsg("Error generating diagram\n\n" + (e as any)?.message ?? String(e))
-            console.error("Error generating diagram", e)
             return curDiagram
         }
     }
