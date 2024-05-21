@@ -1,4 +1,4 @@
-import {createSignal} from 'solid-js';
+import {createEffect, createSignal} from 'solid-js';
 import './App.css';
 import generate from 'bytefield-svg';
 import sampleDiagramSource from "./sample-diagram-source.ts";
@@ -8,22 +8,37 @@ function App() {
     const copyBtnLabel = 'Copy SVG';
     const textPlaceholder = `Enter a bytefield-svg diagram here`
     const [text, setText] = createSignal(sampleDiagramSource);
-    const [svg, setSvg] = createSignal(generateDiagram(text()));
+    const [svg, setSvg] = createSignal<string>();
     const [copyButtonLabel, setCopyButtonLabel] = createSignal(copyBtnLabel);
+    const [errorMsg, setErrorMsg] = createSignal<string | null>('');
 
-    function generateDiagram(diagramSource: string): string {
-        return generate(diagramSource, {"embedded": true});
+    function generateDiagram(diagramSource: string, curDiagram: string | undefined): string | undefined {
+        setErrorMsg(null)
+        try {
+            return generate(diagramSource, {"embedded": true});
+        } catch (e) {
+            setErrorMsg("Error generating diagram\n\n" + (e as any)?.message ?? String(e))
+            console.error("Error generating diagram", e)
+            return curDiagram
+        }
     }
+
+    createEffect(() => {
+        setSvg(generateDiagram(text(), ""));
+    });
 
     function handleInput(event: Event) {
         const eventTarget = event.target as HTMLTextAreaElement;
         const newDiagramSource = eventTarget.value;
         setText(newDiagramSource);
-        setSvg(generateDiagram(newDiagramSource))
+        setSvg(curDiagram => generateDiagram(newDiagramSource, curDiagram))
     }
 
     const downloadSvg = () => {
-        const svgBlob = new Blob([svg()], { type: 'image/svg+xml;charset=utf-8' });
+        const svgStr = svg()
+        if (svgStr == null)
+            return
+        const svgBlob = new Blob([svgStr], {type: 'image/svg+xml;charset=utf-8'});
         const url = URL.createObjectURL(svgBlob);
 
         const link = document.createElement('a');
@@ -38,8 +53,11 @@ function App() {
     };
 
     const copySvg = async () => {
+        const svgStr = svg()
+        if (svgStr == null)
+            return
         try {
-            await navigator.clipboard.writeText(svg());
+            await navigator.clipboard.writeText(svgStr);
             setCopyButtonLabel('Copied!');
         } catch (err) {
             console.error('Failed to copy: ', err);
@@ -68,7 +86,13 @@ function App() {
                 onInput={handleInput}
                 placeholder={textPlaceholder}
             ></textarea>
-            <div class="output" innerHTML={svg()}></div>
+            <div class="output">
+                {errorMsg() ? (
+                    <textarea class="error" readonly={true} innerHTML={errorMsg() ?? ''}/>
+                ) : (
+                    <div class="diagram" innerHTML={svg()}></div>
+                )}
+            </div>
         </div>
     );
 }
