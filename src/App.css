@@ -19,9 +19,14 @@
     gap: 6px;
 }
 
-.github-icon {
-    height: 1em;
-    padding-top: 0.3em;
+.github-icon svg {
+    padding-top: 0.4em;
+}
+
+@media (prefers-color-scheme: dark) {
+    .github-icon {
+        filter: invert(1);
+    }
 }
 
 .source {

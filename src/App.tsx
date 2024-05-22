@@ -2,7 +2,7 @@ import {createEffect, createSignal} from 'solid-js';
 import './App.css';
 import generate from 'bytefield-svg';
 import sampleDiagramSource from "./sample-diagram-source.ts";
-import githubMark from './assets/github-mark.svg'
+import GithubMark from './assets/github-mark.svg'
 
 function App() {
     const copyBtnLabel = 'Copy SVG';
@@ -68,11 +68,9 @@ function App() {
     return (
         <div class="app-container">
             <h4 class="title">
-                <a target="_blank" href="https://github.com/EugenDueck/bytefield-svg-studio"> <img
-                    class="github-icon"
-                    src={githubMark}
-                    alt="Link to GitHub"
-                /></a>
+                <a class="github-icon" target="_blank" href="https://github.com/EugenDueck/bytefield-svg-studio">
+                    <GithubMark/>
+                </a>
                 <span>ByteField-SVG Studio </span>
                 <a target="_blank" href="https://bytefield-svg.deepsymmetry.org/bytefield-svg/intro.html">(ByteField
                     Format Docs)</a>
