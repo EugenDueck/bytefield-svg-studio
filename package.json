@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bytefield-svg": "^1.8.0",
+    "bytefield-svg": "^1.11.0",
     "solid-js": "^1.8.15"
   },
   "devDependencies": {

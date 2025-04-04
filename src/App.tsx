@@ -17,7 +17,7 @@ function App() {
         try {
             return generate(diagramSource, {"embedded": true});
         } catch (e) {
-            setErrorMsg("Error generating diagram\n\n" + (e as any)?.message ?? String(e))
+            setErrorMsg("Error generating diagram\n\n" + (e as any)?.message || String(e))
             return curDiagram
         }
     }
